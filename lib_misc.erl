@@ -1,6 +1,6 @@
 -module(lib_misc).
--export([odds_and_evens2/1, odds_and_evens1/1, perms/1, pythag/1, qsort/1, test/0, for/3]).
--import(lists, [seq/2]).
+-export([odds_and_evens2/1, odds_and_evens1/1, perms/1, pythag/1, qsort/1, test/0, for/3, my_tuple_to_list/1]).
+-import(lists, [seq/2, map/2]).
 
 test() ->
 	[1, 4, 9, 16, 25, 36, 49, 64, 81, 100] = for(1, 10, fun(I) -> I * I end),
@@ -11,6 +11,8 @@ test() ->
 	["cats", "cast", "ctas", "ctsa", "csat", "csta", "acts", "acst", "atcs", "atsc", "asct", "astc", "tcas", "tcsa", "tacs", "tasc", "tsca", "tsac", "scat", "scta", "sact", "satc", "stca", "stac"] = perms("cats"),
 	{[1, 3, 5], [2, 4, 6]} = odds_and_evens1([1, 2, 3, 4, 5, 6]),
 	{[5, 3, 1], [6, 4, 2]} = odds_and_evens2([1, 2, 3, 4, 5, 6]),
+	[] = my_tuple_to_list({}),
+	[3, 4, 5] = my_tuple_to_list({3, 4, 5}),
 	test_worked.
 
 for(Max, Max, F) -> [F(Max)];
@@ -48,3 +50,5 @@ odds_and_evens_acc([Head | Tail], Odds, Evens) ->
 	end;
 odds_and_evens_acc([], Odds, Evens) ->
 	{Odds, Evens}.
+
+my_tuple_to_list(T) -> map(fun(I) -> element(I, T) end, seq(1, tuple_size(T))).
