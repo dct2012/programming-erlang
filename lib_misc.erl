@@ -1,6 +1,17 @@
 -module(lib_misc).
--export([odds_and_evens2/1, odds_and_evens1/1, perms/1, pythag/1, qsort/1, test/0, for/3, my_tuple_to_list/1]).
+-export([
+	odds_and_evens2/1,
+	odds_and_evens1/1,
+	perms/1,
+	pythag/1,
+	qsort/1,
+	test/0, for/3,
+	my_tuple_to_list/1,
+	my_time_func/1,
+	my_date_string/0
+]).
 -import(lists, [seq/2, map/2]).
+-import(erlang, [monotonic_time/1, localtime/0]).
 
 test() ->
 	[1, 4, 9, 16, 25, 36, 49, 64, 81, 100] = for(1, 10, fun(I) -> I * I end),
@@ -52,3 +63,37 @@ odds_and_evens_acc([], Odds, Evens) ->
 	{Odds, Evens}.
 
 my_tuple_to_list(T) -> map(fun(I) -> element(I, T) end, seq(1, tuple_size(T))).
+
+my_time_func(F) ->
+	Start = monotonic_time(nanosecond),
+	Result = F(),
+	Finish = monotonic_time(nanosecond) - Start,
+	io:format("Function took ~w nanoseconds.~n", [Finish]),
+	Result.
+
+numeric_month_to_string(M) -> element(M, {
+	"January",
+	"Febuary",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December"}).
+
+my_date_string() ->
+	{{Year, Month, Day}, {Hour, Minute, Second}} = localtime(),
+	io:format(
+		"~s ~w ~w ~w:~w:~w~n", [
+			numeric_month_to_string(Month),
+			Day,
+			Year,
+			Hour,
+			Minute,
+			Second
+		]
+	).
