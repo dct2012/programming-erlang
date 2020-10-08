@@ -17,6 +17,11 @@
     1. Write your own read_file function the raises a exception.
     1. Re-write try_test so it produces two error messages, one for user and one for the developer.
 1. Binaries and the Bit Syntax
+    1. Write function that reverses the order of bytes in a binary.
+    1. Write function that reverses the order of bits in a binary.
+    1. Write function term_to_packet(Term) -> Packet.
+    1. Write function packet_to_term(Packet) -> Term.
+    1. Write test functions.
 1. The Rest of Sequential Erlang
 1. Types
 1. Compiling and Running Your Program
